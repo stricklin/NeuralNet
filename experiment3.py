@@ -227,15 +227,28 @@ def read_data(filename: str):
     return targets, data
 
 if __name__ == "__main__":
-    training_targets_param, training_inputs_param = read_data("./mnist_train.csv")
+    training_targets_param, training_inputs_param = read_data("./quarter_train.csv")
     testing_targets_param, testing_inputs_param = read_data("./mnist_test.csv")
-    learning_rate_param = 0.1
+    learning_rate_param = 0.2
     hidden_unit_count_param = 100
     momentum_param = 0.9
 
 
-    filename_param = "./" + "100_hidden_unit" + ".txt"
+    start_time = time.time()
+    filename_param = "./" + "quarter" + ".txt"
     neural_net = NeuralNet(hidden_unit_count_param, momentum_param, learning_rate_param, filename_param,
                            training_inputs_param, training_targets_param, testing_inputs_param, testing_targets_param,)
     neural_net.train_epochs(50)
     neural_net.file.close()
+    endtime = time.time()
+    print("time for quarter: " + str(endtime-start_time))
+
+    start_time = time.time()
+    training_targets_param, training_inputs_param = read_data("./half_train.csv")
+    filename_param = "./" + "half" + ".txt"
+    neural_net = NeuralNet(hidden_unit_count_param, momentum_param, learning_rate_param, filename_param,
+                           training_inputs_param, training_targets_param, testing_inputs_param, testing_targets_param,)
+    neural_net.train_epochs(50)
+    neural_net.file.close()
+    endtime = time.time()
+    print("time for half: " + str(endtime-start_time))
